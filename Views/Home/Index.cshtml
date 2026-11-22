@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Phone Devices";
+}
+
+<div class="phone-page" ng-app="phoneApp" ng-controller="PhoneController" ng-cloak>
+
+    <div class="phone-hero">
+        <div>
+            <span class="hero-badge">Devices Dashboard</span>
+            <h1>Phone Devices</h1>
+            <p>
+                Manage phone records using ASP.NET Core MVC, AngularJS, Bootstrap, and Web API.
+            </p>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span class="stat-number">{{ phones.length }}</span>
+                <span class="stat-label">Total Phones</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-number">{{ visiblePhones.length }}</span>
+                <span class="stat-label">Visible Results</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-card">
+
+        <div class="phone-card-header">
+            <div>
+                <h3>Phone List</h3>
+                <p>Search, add, and edit phone devices.</p>
+            </div>
+
+            <button type="button"
+                    class="btn modern-btn-success"
+                    ng-click="openPhoneModal()">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add Phone
+            </button>
+        </div>
+
+        <div class="phone-toolbar">
+
+            <div class="search-box">
+                <span class="glyphicon glyphicon-search search-icon"></span>
+
+                <input type="text"
+                       class="form-control modern-input"
+                       ng-model="searchBox"
+                       placeholder="Search by phone name or ID" />
+            </div>
+
+            <div class="toolbar-buttons">
+                <button type="button"
+                        class="btn modern-btn-primary"
+                        ng-click="applySearch()">
+                    Search
+                </button>
+
+                <button type="button"
+                        class="btn modern-btn-light"
+                        ng-click="clearSearch()">
+                    Clear
+                </button>
+            </div>
+
+        </div>
+
+        <div class="table-responsive modern-table-wrapper">
+
+            <table class="table modern-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Phone Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr ng-repeat="phone in visiblePhones track by phone.id">
+                        <td>
+                            <span class="id-pill">#{{ phone.id }}</span>
+                        </td>
+
+                        <td>
+                            <div class="phone-name-cell">
+                                <div class="phone-avatar">
+                                    {{ phone.name.charAt(0) }}
+                                </div>
+
+                                <div>
+                                    <strong>{{ phone.name }}</strong>
+                                    <small>Phone device</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="action-cell">
+                            <div class="action-buttons">
+                                <button type="button"
+                                        class="btn modern-btn-warning btn-sm"
+                                        ng-click="openPhoneModal(phone)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    Edit
+                                </button>
+
+                                <button type="button"
+                                        class="btn modern-btn-danger btn-sm"
+                                        ng-click="deletePhone(phone)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr ng-if="visiblePhones.length === 0">
+                        <td colspan="3">
+                            <div class="empty-state">
+                                <div class="empty-icon">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </div>
+                                <h4>No phones found</h4>
+                                <p>Try another search value or clear the search box.</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

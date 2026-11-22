@@ -1,0 +1,135 @@
+﻿@model Devices_tasks1_2_3.Models.LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Login - Internship Project</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <style>
+
+        body {
+            background-color: #f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            width: 420px;
+            max-width: 90%;
+            margin: 100px auto;
+        }
+
+        .login-panel {
+            background-color: white;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            padding: 35px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .login-button {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .validation-summary-errors {
+            color: #a94442;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-panel">
+
+            <h2 class="login-title">
+                Internship Project
+            </h2>
+
+            <form asp-controller="Account"
+                  asp-action="Login"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="ReturnUrl"
+                       type="hidden" />
+
+                <div asp-validation-summary="ModelOnly">
+                </div>
+
+                <div class="form-group">
+
+                    <label asp-for="Username">
+                        Username
+                    </label>
+
+                    <input asp-for="Username"
+                           class="form-control"
+                           autocomplete="username" />
+
+                    <span asp-validation-for="Username"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label asp-for="Password">
+                        Password
+                    </label>
+
+                    <input asp-for="Password"
+                           class="form-control"
+                           autocomplete="current-password" />
+
+                    <span asp-validation-for="Password"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary login-button">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

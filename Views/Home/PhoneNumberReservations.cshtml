@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Phone Number Reservations";
+}
+
+<div class="phone-page"
+     ng-app="phoneApp"
+     ng-controller="PhoneNumberReservationController"
+     ng-cloak>
+
+    <div class="phone-hero">
+        <div>
+            <span class="hero-badge">
+                Reservation Management
+            </span>
+
+            <h1>Phone Number Reservations</h1>
+
+            <p>
+                View phone number reservations by client
+                and phone number.
+            </p>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span class="stat-number">
+                    {{ reservations.length }}
+                </span>
+
+                <span class="stat-label">
+                    Total Reservations
+                </span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-number">
+                    {{ visibleReservations.length }}
+                </span>
+
+                <span class="stat-label">
+                    Visible Results
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-card">
+
+        <div class="phone-card-header">
+            <div>
+                <h3>Reservation List</h3>
+
+                <p>
+                    Filter reservations by client or phone number.
+                </p>
+            </div>
+        </div>
+
+        <div class="phone-toolbar">
+
+            <client-selector ng-model="clientIdFilter"
+                             selector-api="clientFilterApi"
+                             empty-text="All Clients">
+            </client-selector>
+
+            <phone-number-selector ng-model="phoneNumberIdFilter"
+                                   selector-api="phoneNumberFilterApi"
+                                   empty-text="All Phone Numbers">
+            </phone-number-selector>
+
+            <div class="toolbar-buttons">
+                <button type="button"
+                        class="btn modern-btn-primary"
+                        ng-click="applyFilter()">
+                    Search
+                </button>
+
+                <button type="button"
+                        class="btn modern-btn-light"
+                        ng-click="clearFilter()">
+                    Clear
+                </button>
+            </div>
+
+        </div>
+
+        <div class="table-responsive modern-table-wrapper">
+
+            <table class="table modern-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Client</th>
+                        <th>Phone Number</th>
+                        <th>BED</th>
+                        <th>EED</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr ng-repeat="
+                        reservation in visibleReservations
+                        track by reservation.id">
+
+                        <td>
+                            <span class="id-pill">
+                                #{{ reservation.id }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ reservation.clientName }}
+                        </td>
+
+                        <td>
+                            {{ reservation.phoneNumber }}
+                        </td>
+
+                        <td>
+                            {{ reservation.bed }}
+                        </td>
+
+                        <td>
+                            {{ reservation.eed || "No End Date" }}
+                        </td>
+                    </tr>
+
+                    <tr ng-if="
+                        visibleReservations.length === 0">
+
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <h4>No reservations found</h4>
+
+                                <p>
+                                    Try another filter value.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Internship Project</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="/css/phone.css" />
+
+    <style>
+        body {
+            padding-top: 70px;
+            background-color: #f7f7f7;
+        }
+
+        .navbar-inverse {
+            border-radius: 0;
+        }
+
+        .main-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            min-height: 500px;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 15px 0;
+            color: #777;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+
+</head>
+
+<body ng-app="phoneApp">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="container">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    Internship Project
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav">
+
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Devices</a>
+                </li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="Clients">Clients</a>
+                </li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="PhoneNumbers">Phone Numbers</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="PhoneNumberReservations">Reservations</a>
+                </li>
+                <li>
+                    <a asp-controller="Home"asp-action="ClientTypeReport">Clients Per Type Report</a>
+                </li>
+
+                <li>
+                    <a asp-controller="Home"asp-action="PhoneNumberStatusReport">Phone Number Status Report</a>
+                </li>
+
+            </ul>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a href="javascript:void(0)">
+                            @User.Identity.Name
+                        </a>
+                    </li>
+
+                    <li>
+
+                        <form asp-controller="Account"
+                              asp-action="Logout"
+                              method="post"
+                              style="margin: 0;">
+
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="btn btn-link navbar-btn"
+                                    style="
+                                color: #9d9d9d;
+                                text-decoration: none;
+                                margin-left: 5px;
+                            ">
+                                Logout
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                </ul>
+            }
+
+        </div>
+
+    </nav>
+
+    <div class="container">
+
+        <div class="main-container">
+            @RenderBody()
+        </div>
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Internship Project</p>
+        </footer>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="~/js/phoneApp/phone.module.js"></script>
+
+    <script src="~/js/phoneApp/phone.service.js"></script>
+    <script src="~/js/phoneApp/client.service.js"></script>
+    <script src="~/js/phoneApp/phoneNumber.service.js"></script>
+    <script src="~/js/phoneApp/phoneNumberReservation.service.js"></script>
+    <script src="~/js/phoneApp/report.service.js"></script>
+    <script src="~/js/phoneApp/message.service.js"></script>
+
+
+    <script src="~/js/phoneApp/selector.directive.js"></script>
+
+    <script src="~/js/phoneApp/phone.controller.js"></script>
+    <script src="~/js/phoneApp/client.controller.js"></script>
+    <script src="~/js/phoneApp/phoneNumber.controller.js"></script>
+    <script src="~/js/phoneApp/phoneNumberReservation.controller.js"></script>
+    <script src="~/js/phoneApp/clientTypeReport.controller.js"></script>
+    <script src="~/js/phoneApp/phoneNumberStatusReport.controller.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

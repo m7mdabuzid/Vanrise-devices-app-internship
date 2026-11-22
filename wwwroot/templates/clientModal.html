@@ -1,0 +1,173 @@
+﻿<form name="clientForm"
+      ng-submit="saveClient()"
+      novalidate>
+
+    <div class="modal-header">
+
+        <button type="button"
+                class="close"
+                ng-click="cancel()">
+            &times;
+        </button>
+
+        <h4 class="modal-title">
+            {{ modalTitle }}
+        </h4>
+
+    </div>
+
+    <div class="modal-body">
+
+        <div class="form-group"
+             ng-class="{
+        'has-error':
+            clientForm.clientName.$touched &&
+            clientForm.clientName.$invalid
+     }">
+
+            <label>Client Name</label>
+
+            <input type="text"
+                   id="clientName"
+                   name="clientName"
+                   class="form-control"
+                   ng-model="client.name"
+                   required
+                   ng-minlength="2"
+                   ng-maxlength="100" />
+
+            <span class="help-block text-danger"
+                  ng-if="clientForm.clientName.$touched &&
+                 clientForm.clientName.$error.required">
+                Client name is required.
+            </span>
+
+            <span class="help-block text-danger"
+                  ng-if="clientForm.clientName.$touched &&
+                 clientForm.clientName.$error.minlength">
+                Client name must contain at least 2 characters.
+            </span>
+
+            <span class="help-block text-danger"
+                  ng-if="clientForm.clientName.$touched &&
+                 clientForm.clientName.$error.maxlength">
+                Client name cannot contain more than 100 characters.
+            </span>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Client Type</label>
+
+            <client-type-selector ng-model="client.type"
+                                  selector-api="clientTypeEditorApi"
+                                  empty-text="Select Client Type">
+            </client-type-selector>
+
+        </div>
+
+        <div class="form-group"
+             ng-if="client.type === 1">
+
+            <label>Birth Date</label>
+
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <label>Day</label>
+
+                    <input type="number"
+                           name="birthDay"
+                           class="form-control"
+                           ng-model="birthDateParts.day"
+                           placeholder="Day" />
+
+                    <span class="help-block text-danger"
+                          ng-if="birthDateParts.day !== null &&
+                         birthDateParts.day !== undefined &&
+                         !isDayValid()">
+                        Day must be between 1 and 31.
+                    </span>
+                </div>
+
+                <div class="col-sm-4">
+                    <label>Month</label>
+
+                    <input type="number"
+                           name="birthMonth"
+                           class="form-control"
+                           ng-model="birthDateParts.month"
+                           placeholder="Month" />
+
+                    <span class="help-block text-danger"
+                          ng-if="birthDateParts.month !== null &&
+                         birthDateParts.month !== undefined &&
+                         !isMonthValid()">
+                        Month must be between 1 and 12.
+                    </span>
+                </div>
+
+                <div class="col-sm-4">
+                    <label>Year</label>
+
+                    <input type="number"
+                           name="birthYear"
+                           class="form-control"
+                           ng-model="birthDateParts.year"
+                           placeholder="Year" />
+
+                    <span class="help-block text-danger"
+                          ng-if="birthDateParts.year !== null &&
+                         birthDateParts.year !== undefined &&
+                         !isYearValid()">
+                        Year must be between 1900 and
+                        {{ currentYear }}.
+                    </span>
+                </div>
+
+            </div>
+
+            <span class="help-block text-danger"
+                  ng-if="isBirthDateMissing()">
+                Day, month, and year are required for an Individual client.
+            </span>
+
+            <span class="help-block text-danger"
+                  ng-if="isDayValid() &&
+                 isMonthValid() &&
+                 isYearValid() &&
+                 !isCalendarDateValid()">
+                The selected day does not exist in the selected month.
+            </span>
+
+            <span class="help-block text-danger"
+                  ng-if="isCalendarDateValid() &&
+                 !isAgeValid()">
+                The client must be older than 18 years.
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <button type="submit"
+                class="btn btn-primary"
+                ng-disabled="
+                    clientForm.$invalid ||
+                    !client.type ||
+                    !isAgeValid()">
+            {{ saveButtonText }}
+        </button>
+
+        <button type="button"
+                class="btn btn-default"
+                ng-click="cancel()">
+            Cancel
+        </button>
+
+    </div>
+
+</form>

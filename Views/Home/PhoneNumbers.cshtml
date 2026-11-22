@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Phone Numbers";
+}
+
+<div class="phone-page" ng-app="phoneApp" ng-controller="PhoneNumberController" ng-cloak>
+
+    <div class="phone-hero">
+        <div>
+            <span class="hero-badge">Phone Number Management</span>
+            <h1>Phone Numbers</h1>
+            <p>Manage phone numbers and connect each number to a device.</p>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span class="stat-number">{{ phoneNumbers.length }}</span>
+                <span class="stat-label">Total Numbers</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-number">{{ visiblePhoneNumbers.length }}</span>
+                <span class="stat-label">Visible Results</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-card">
+
+        <div class="phone-card-header">
+            <div>
+                <h3>Phone Number List</h3>
+                <p>Filter, add, and edit phone numbers.</p>
+            </div>
+
+            <button type="button"
+                    class="btn modern-btn-success"
+                    ng-click="openPhoneNumberModal()">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add Phone Number
+            </button>
+        </div>
+
+        <div class="phone-toolbar">
+
+            <div class="search-box">
+                <span class="glyphicon glyphicon-search search-icon"></span>
+                <input type="text"
+                       class="form-control modern-input"
+                       ng-model="numberFilter"
+                       placeholder="Filter by number" />
+            </div>
+
+            <device-selector ng-model="deviceIdFilter"
+                             selector-api="deviceFilterApi"
+                             empty-text="All Devices">
+            </device-selector>
+
+            <div class="toolbar-buttons">
+                <button type="button"
+                        class="btn modern-btn-primary"
+                        ng-click="applyFilter()">
+                    Search
+                </button>
+
+                <button type="button"
+                        class="btn modern-btn-light"
+                        ng-click="clearFilter()">
+                    Clear
+                </button>
+            </div>
+
+        </div>
+
+        <div class="table-responsive modern-table-wrapper">
+
+            <table class="table modern-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Number</th>
+                        <th>Device</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="phoneNumber in visiblePhoneNumbers track by phoneNumber.id">
+                        <td>
+                            <span class="id-pill">#{{ phoneNumber.id }}</span>
+                        </td>
+
+                        <td>
+                            <strong>{{ phoneNumber.number }}</strong>
+                        </td>
+
+                        <td>
+                            {{ phoneNumber.deviceName }}
+                        </td>
+                        <td class="action-cell">
+                            <div class="action-buttons">
+                                <button type="button"
+                                        class="btn modern-btn-warning btn-sm"
+                                        ng-click="openPhoneNumberModal(phoneNumber)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    Edit
+                                </button>
+
+                                <button type="button"
+                                        class="btn modern-btn-danger btn-sm"
+                                        ng-click="deletePhoneNumber(phoneNumber)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr ng-if="visiblePhoneNumbers.length === 0">
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <h4>No phone numbers found</h4>
+                                <p>Try another filter value.</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Clients Per Type Report";
+}
+
+<div ng-controller="ClientTypeReportController">
+
+    <div class="page-header">
+        <h2>Clients Per Type Report</h2>
+    </div>
+
+    <div class="filter-section">
+
+        <div class="form-group">
+            <label>Client Type</label>
+
+            <client-type-selector ng-model="typeFilter"
+                                  selector-api="clientTypeFilterApi"
+                                  empty-text="All Types">
+            </client-type-selector>
+        </div>
+
+        <button type="button"
+                class="btn btn-primary"
+                ng-click="loadReport()">
+            Filter
+        </button>
+
+        <button type="button"
+                class="btn btn-default"
+                ng-click="clearFilter()">
+            Clear
+        </button>
+
+    </div>
+
+    <br />
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>No. of Clients</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="row in reportRows track by row.type">
+                <td>{{ row.typeName }}</td>
+                <td>{{ row.numberOfClients }}</td>
+            </tr>
+
+            <tr ng-if="reportRows.length === 0">
+                <td colspan="2"
+                    class="text-center">
+                    No results found.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

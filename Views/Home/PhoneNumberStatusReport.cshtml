@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] =
+        "Reserved and Unreserved Phone Numbers Report";
+}
+
+<div ng-controller="PhoneNumberStatusReportController">
+
+    <div class="page-header">
+        <h2>
+            Reserved and Unreserved Phone Numbers
+            Per Device
+        </h2>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="form-group">
+
+                <label>Device</label>
+
+                <device-selector ng-model="deviceIdFilter"
+                                 selector-api="deviceFilterApi"
+                                 empty-text="All Devices">
+                </device-selector>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+
+                <label>Phone Number Status</label>
+
+                <phone-number-status-selector ng-model="statusFilter"
+                                              selector-api="statusFilterApi"
+                                              empty-text="All Statuses">
+                </phone-number-status-selector>
+
+            </div>
+        </div>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-primary"
+            ng-click="loadReport()">
+        Filter
+    </button>
+
+    <button type="button"
+            class="btn btn-default"
+            ng-click="clearFilter()">
+        Clear
+    </button>
+
+    <br />
+    <br />
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>Device</th>
+                <th>Phone Number Status</th>
+                <th># of Phone Numbers</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr ng-repeat="
+                row in reportRows
+                track by row.deviceId + '-' + row.status">
+
+                <td>{{ row.deviceName }}</td>
+
+                <td>{{ row.statusName }}</td>
+
+                <td>
+                    {{ row.numberOfPhoneNumbers }}
+                </td>
+
+            </tr>
+
+            <tr ng-if="reportRows.length === 0">
+                <td colspan="3"
+                    class="text-center">
+                    No results found.
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>

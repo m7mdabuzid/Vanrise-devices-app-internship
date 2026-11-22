@@ -1,0 +1,48 @@
+﻿<div class="modal-header modern-modal-header">
+    <button type="button"
+            class="close"
+            ng-click="cancel()">
+        &times;
+    </button>
+
+    <h3 class="modal-title">{{ modalTitle }}</h3>
+</div>
+
+<form ng-submit="save()">
+
+    <div class="modal-body modern-modal-body">
+
+        <phone-number-selector ng-if="isReserve"
+                               ng-model="formData.phoneNumberId"
+                               selector-api="phoneNumberSelectorApi"
+                               mode="available"
+                               empty-text="Select Phone Number">
+        </phone-number-selector>
+
+        <phone-number-selector ng-if="!isReserve"
+                               ng-model="formData.phoneNumberId"
+                               selector-api="phoneNumberSelectorApi"
+                               mode="active"
+                               client-id="client.id"
+                               empty-text="Select Reserved Number">
+        </phone-number-selector>
+
+    </div>
+
+    <div class="modal-footer modern-modal-footer">
+
+        <button type="button"
+                class="btn modern-btn-light"
+                ng-click="cancel()">
+            Cancel
+        </button>
+
+        <button type="submit"
+                class="btn modern-btn-primary"
+                ng-disabled="!formData.phoneNumberId">
+            {{ saveButtonText }}
+        </button>
+
+    </div>
+
+</form>

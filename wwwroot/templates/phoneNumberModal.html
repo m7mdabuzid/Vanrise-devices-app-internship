@@ -1,0 +1,63 @@
+﻿<form name="phoneNumberForm"
+      ng-submit="savePhoneNumber()"
+      novalidate>
+
+    <div class="form-group"
+         ng-class="{ 'has-error':
+            phoneNumberForm.number.$touched &&
+            phoneNumberForm.number.$invalid }">
+
+        <label>Phone Number</label>
+
+        <input type="text"
+               name="number"
+               class="form-control"
+               ng-model="phoneNumber.number"
+               required
+               ng-pattern="/^\d{8}$/" />
+
+        <span class="help-block"
+              ng-if="phoneNumberForm.number.$touched &&
+                     phoneNumberForm.number.$error.required">
+            Phone number is required.
+        </span>
+
+        <span class="help-block"
+              ng-if="phoneNumberForm.number.$touched &&
+                     phoneNumberForm.number.$error.pattern">
+            Phone number must contain exactly 8 digits.
+        </span>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Device</label>
+
+        <device-selector ng-model="phoneNumber.deviceId"
+                         selector-api="deviceEditorApi"
+                         empty-text="Select Device">
+        </device-selector>
+
+        <span class="help-block text-danger"
+              ng-if="!phoneNumber.deviceId">
+            A device must be selected.
+        </span>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary"
+            ng-disabled="
+                phoneNumberForm.$invalid ||
+                !phoneNumber.deviceId">
+        {{ saveButtonText }}
+    </button>
+
+    <button type="button"
+            class="btn btn-default"
+            ng-click="cancel()">
+        Cancel
+    </button>
+
+</form>
